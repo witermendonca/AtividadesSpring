@@ -59,14 +59,14 @@ public class LiveCodeController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<LiveCode> post (@RequestBody LiveCode postagem){
-		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));	
+	public ResponseEntity<LiveCode> post (@RequestBody LiveCode live){
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(live));	
 	}
 	
 	@PutMapping
-	public ResponseEntity<LiveCode> put (@RequestBody LiveCode postagem){
+	public ResponseEntity<LiveCode> put (@RequestBody LiveCode live){
 			
-			return ResponseEntity.status(HttpStatus.OK).body(repository.save(postagem));
+			return ResponseEntity.status(HttpStatus.OK).body(repository.save(live));
 			
 		}
 	

@@ -1,4 +1,4 @@
-package com.farmacia.drogariaG.model;
+package org.generation.blogPessoal.model;
 
 import java.util.List;
 
@@ -10,28 +10,23 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "tb_categoria")
-public class Categoria {
+@Table(name = "tb_tema")
+public class Tema {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
+	
 	@NotNull
-	@Size(min = 0, max = 100)
 	private String descricao;
-
-	@NotNull
-	private boolean ativo;
-
-	@OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("categoria")
-	private List<Produto> produto;
+	
+	@OneToMany(mappedBy = "tema", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("tema")
+	private  List<Postagem> postagem;
 
 	public long getId() {
 		return id;
@@ -49,20 +44,13 @@ public class Categoria {
 		this.descricao = descricao;
 	}
 
-	public boolean isAtivo() {
-		return ativo;
+	public List<Postagem> getPostagem() {
+		return postagem;
 	}
 
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
+	public void setPostagem(List<Postagem> postagem) {
+		this.postagem = postagem;
 	}
-
-	public List<Produto> getProduto() {
-		return produto;
-	}
-
-	public void setProduto(List<Produto> produto) {
-		this.produto = produto;
-	}
-
+	
+	
 }

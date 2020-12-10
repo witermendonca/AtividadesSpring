@@ -1,8 +1,10 @@
-package com.farmacia.drogariaG.controller;
+package org.generation.blogPessoal.controller;
 
 import java.util.List;
 
-
+import org.generation.blogPessoal.model.Postagem;
+import org.generation.blogPessoal.model.Tema;
+import org.generation.blogPessoal.repository.TemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,38 +18,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.farmacia.drogariaG.model.Categoria;
-import com.farmacia.drogariaG.repository.CategoriaRepository;
-
 @RestController
-@RequestMapping("/categoria")
-@CrossOrigin(value = "*", allowedHeaders = "*")
-public class CategoriaController {
-	
-	@Autowired
-	private CategoriaRepository repository;
+@RequestMapping("/tema")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class TemaController {
 
+	@Autowired
+	private TemaRepository repository;
+	
 	@GetMapping
-	public ResponseEntity<List<Categoria>> getALL(){
+	public ResponseEntity<List<Tema>> getALL(){
+		
 		return ResponseEntity.ok(repository.findAll());
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> GetByID(@PathVariable long id){
+	@GetMapping ("/{id}")
+	public ResponseEntity<Tema> getByID(@PathVariable long id) {
 		
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
 	
+	@GetMapping ("/nome/{nome}")
+	public ResponseEntity<List<Tema>> GetByName(@PathVariable String nome){
+	
+	return ResponseEntity.ok(repository.findAllByDescricaoContainingIgnoreCase(nome));
+		
+	}
+	
 	@PostMapping
-	public ResponseEntity<Categoria> post (@RequestBody Categoria categoria){
-			
-			return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(categoria));
-			
-		}
+	public ResponseEntity<Tema> post (@RequestBody Tema tema){
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(tema));
+		
+	}
+	
 	@PutMapping
-	public ResponseEntity<Categoria> put (@RequestBody Categoria categoria){
+	public ResponseEntity<Tema> put (@RequestBody Tema tema){
 			
-			return ResponseEntity.status(HttpStatus.OK).body(repository.save(categoria));
+			return ResponseEntity.status(HttpStatus.OK).body(repository.save(tema));
 			
 		}
 	
