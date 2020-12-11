@@ -1,8 +1,5 @@
-package com.farmacia.drogariaG.model;
+package org.minhaEscola.secretaria.model;
 
-import java.math.BigDecimal;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,8 +12,8 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "tb_produto")
-public class Produto {
+@Table(name = "tb_aluno")
+public class Aluno {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +23,11 @@ public class Produto {
 	@Size(min = 2, max = 100)
 	private String nome;
 
-	private BigDecimal preco;
+	private boolean matriculado;
 
 	@ManyToOne
-	@JsonIgnoreProperties("produto")
-	private Categoria categoria;
+	@JsonIgnoreProperties("aluno")
+	private Turma turma;
 
 	public long getId() {
 		return id;
@@ -48,19 +45,20 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	public BigDecimal getPreco() {
-		return preco;
+	public boolean isMatriculado() {
+		return matriculado;
 	}
 
-	public void setPreco(BigDecimal preco) {
-		this.preco = preco;
+	public void setMatriculado(boolean matriculado) {
+		this.matriculado = matriculado;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
+	public Turma getTurma() {
+		return turma;
 	}
 
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
+	public void setTurma(Turma turma) {
+		this.turma = turma;
 	}
+
 }

@@ -1,7 +1,9 @@
-package com.farmacia.drogariaG.controller;
+package org.minhaEscola.secretaria.controller;
 
 import java.util.List;
 
+import org.minhaEscola.secretaria.model.Aluno;
+import org.minhaEscola.secretaria.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,39 +17,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.farmacia.drogariaG.model.Produto;
-import com.farmacia.drogariaG.repository.ProdutoRepository;
-
-
 @RestController
-@RequestMapping("/produto")
+@RequestMapping("/aluno")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class ProdutoController {
-	
+public class AlunoController {
+
 	@Autowired
-	private ProdutoRepository repository;
+	private AlunoRepository repository;
 	
 	@GetMapping
-	public ResponseEntity<List<Produto>> getALL(){
+	public ResponseEntity<List<Aluno>> GetALL(){
+		
 		return ResponseEntity.ok(repository.findAll());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Produto> GetByID(@PathVariable long id){
+	public ResponseEntity<Aluno> GetByID(@PathVariable long id){
 		
 		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
 	
 	@PostMapping
-	public ResponseEntity<Produto> post (@RequestBody Produto produto){
+	public ResponseEntity<Aluno> post (@RequestBody Aluno postagem){
 			
-			return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(produto));
+			return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(postagem));
 			
 		}
 	@PutMapping
-	public ResponseEntity<Produto> put (@RequestBody Produto produto){
+	public ResponseEntity<Aluno> put (@RequestBody Aluno aluno){
 			
-			return ResponseEntity.status(HttpStatus.OK).body(repository.save(produto));
+			return ResponseEntity.status(HttpStatus.OK).body(repository.save(aluno));
 			
 		}
 	
@@ -57,5 +56,4 @@ public class ProdutoController {
 		repository.deleteById(id);
 	}
 	
-
 }
