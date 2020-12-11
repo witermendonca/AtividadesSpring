@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 
 //essa anotação essa entidade vira uma tabela com nome postagem
-@Table(name = "postagem")
+@Table(name = "tb_postagem")
 
 //classe postagem
 public class Postagem {
