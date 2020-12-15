@@ -53,16 +53,30 @@ public class ProdutoController {
 
 	}
 
-	@GetMapping("preco/{valorIn}/{valorFim}")
-	public ResponseEntity<List<Produto>> getAllRange(@PathVariable BigDecimal valorIn,
-			@PathVariable BigDecimal valorFim) {
-		return ResponseEntity.ok(repository.RangePreco(valorIn, valorFim));
+	@GetMapping("preco/{precoIn}/{precoFim}")
+	public ResponseEntity<List<Produto>> getByPreco(@PathVariable BigDecimal precoIn,
+			@PathVariable BigDecimal precoFim) {
+
+		return ResponseEntity.ok(repository.findByPrecoBetween(precoIn, precoFim));
 	}
 
-	@GetMapping("porCategoria/{tipoId}/{valor}")
-	public ResponseEntity<List<Produto>> getAllRange(@PathVariable long tipoId, @PathVariable BigDecimal valor) {
-		return ResponseEntity.ok(repository.RangeTipoPreco(tipoId, valor));
-		
+	@GetMapping("porCategoria/{categoriaId}/{preco}")
+	public ResponseEntity<List<Produto>> getByCategoriaIdAndPreco(@PathVariable long categoriaId,
+
+			@PathVariable BigDecimal preco) {
+
+		return ResponseEntity.ok(repository.findByCategoriaProdutoIdAndPrecoLessThanEqual(categoriaId, preco));
+
+	}
+
+	@GetMapping("/porTipoDes/{descricao}/{valor}")
+	public ResponseEntity<List<Produto>> getByDesPreco(@PathVariable String descricao, @PathVariable BigDecimal valor) {
+		return ResponseEntity.ok(repository.findByDesPreco(descricao, valor));
+	}
+
+	@GetMapping("/porTipoId/{id}/{valor}")
+	public ResponseEntity<List<Produto>> getByDesPreco(@PathVariable long id, @PathVariable BigDecimal valor) {
+		return ResponseEntity.ok(repository.findByIdPreco(id, valor));
 	}
 
 	@PostMapping

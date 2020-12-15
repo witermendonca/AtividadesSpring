@@ -17,13 +17,15 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
 	public List<Produto> findAllByMarcaContainingIgnoreCase(String marca);
 
-	@Query(value = "select * from tb_produto where preco >= :valorIn and preco <= :valorFim", nativeQuery = true)
+	public List<Produto> findByPrecoBetween(BigDecimal precoIn, BigDecimal precoFim);
 
-	public List<Produto> RangePreco(@Param("valorIn") BigDecimal valorIn, @Param("valorFim") BigDecimal valorFim);
+	public List<Produto> findByCategoriaProdutoIdAndPrecoLessThanEqual(long categoriaId, BigDecimal preco);
 
-	//@Query(value = "select tb_produto.id,tb_produto.marca,tb_produto.nome,tb_produto.preco,tb_produto.quantidade,categoria_produto_id from tb_produto inner join tb_categoria on tb_categoria.id = tb_produto.categoria_produto_id where tb_categoria.tipo_eletro_id = :tipoId and  tb_produto.preco <= :valor  ", nativeQuery = true)
+	@Query(value = "select * from tb_produto inner join tb_categoria on tb_categoria.id = tb_produto.categoria_produto_id inner join tb_tipo_eletro on tb_categoria.tipo_eletro_id = tb_tipo_eletro.id\r\n"
+	  + "where tb_tipo_eletro.descricao like :descricao% and tb_produto.preco <= :valor", nativeQuery = true)
+	public List<Produto> findByDesPreco(@Param("descricao") String descricao, @Param("valor") BigDecimal valor);
 
-	@Query(value = "select * from tb_produto where preco <= :valor and categoria_produto_id = :tipoId ", nativeQuery = true)
-	
-	public List<Produto> RangeTipoPreco(@Param("tipoId") long tipoId, @Param("valor") BigDecimal valor);
+	@Query(value = "select * from tb_produto inner join tb_categoria on tb_categoria.id = tb_produto.categoria_produto_id inner join tb_tipo_eletro on tb_categoria.tipo_eletro_id = tb_tipo_eletro.id\r\n"
+			+ "where tb_tipo_eletro.id =  :id and tb_produto.preco <= :valor", nativeQuery = true)
+	public List<Produto> findByIdPreco(@Param("id") long id, @Param("valor") BigDecimal valor);
 }
