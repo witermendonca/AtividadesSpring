@@ -14,12 +14,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsuarioService {
 
-
 	@Autowired
 	private UsuarioRepository repository;
 
 	public Usuario CadastrarUsuario(Usuario usuario) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+		Optional<Usuario> usuarioPresente = repository.findByUsuario(usuario.getUsuario());
+
+		if (usuarioPresente.isPresent()) {
+			return null;
+		}
 
 		String senhaEncoder = encoder.encode(usuario.getSenha());
 		usuario.setSenha(senhaEncoder);
@@ -39,7 +44,7 @@ public class UsuarioService {
 				byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
 				String authHeader = "Basic " + new String(encodedAuth);
 
-				user.get().setToken(authHeader);				
+				user.get().setToken(authHeader);
 				user.get().setNome(usuario.get().getNome());
 
 				return user;

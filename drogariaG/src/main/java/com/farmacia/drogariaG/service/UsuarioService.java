@@ -22,6 +22,12 @@ public class UsuarioService {
 	public Usuario CadastrarUsuario(Usuario usuario) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
+		Optional<Usuario> usuarioPresente = repository.findByUsuario(usuario.getUsuario()); 
+	
+		if(usuarioPresente.isPresent()) {
+			return null;
+		}
+
 		String senhaEncoder = encoder.encode(usuario.getSenha());
 		usuario.setSenha(senhaEncoder);
 
