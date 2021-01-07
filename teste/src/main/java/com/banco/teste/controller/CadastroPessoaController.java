@@ -22,7 +22,7 @@ public class CadastroPessoaController {
 	@Autowired
 	private CadastroPessoaService cadastroPessoaService;
 
-	@PostMapping("/cadastro")
+	@PostMapping
 	public ResponseEntity<CadastroPessoa> Post(@RequestBody @Valid CadastroPessoa cadastro) {
 
 		CadastroPessoa pessoa = cadastroPessoaService.Cadastro(cadastro);
